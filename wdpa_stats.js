@@ -19,27 +19,15 @@ var light  = L.tileLayer('https://cartodb-basemaps-{s}.global.ssl.fastly.net/lig
 }).addTo(map);
 
 
-
-
-
-var url = 'http://edo.jrc.ec.europa.eu/gdo/php/wms.php?version=1.1.1&service=WMS&SRS=EPSG:900913';
-var rdi=L.tileLayer.wms(url, {
-		layers: 'grid_1dd_rdri',
-		transparent: true,
-		format: 'image/png',
-		opacity:'1',
-		zIndex: 33
-	}).addTo(map);
-
-	// wdpa layer
-	var url = 'https://lrm-maps.jrc.ec.europa.eu/geoserver/dopa_explorer_2/wms';
-	var wdpa=L.tileLayer.wms(url, {
-			layers: 'dopa_explorer_2:wdpa_foss4g',
-			transparent: true,
-			format: 'image/png',
-			opacity:'1',
-			zIndex: 33
-		}).addTo(map);
+// wdpa layer
+var url = 'https://lrm-maps.jrc.ec.europa.eu/geoserver/dopa_explorer_2/wms';
+var wdpa=L.tileLayer.wms(url, {
+	layers: 'dopa_explorer_2:wdpa_foss4g',
+	transparent: true,
+	format: 'image/png',
+	opacity:'1',
+	zIndex: 33
+}).addTo(map);
 
 
 // on click function
@@ -47,38 +35,38 @@ map.on('click', function(e) {
 	 if (map.hasLayer(wdpa)) {
 		var latlng= e.latlng;
 		var url = getFeatureInfoUrl(
-										map,
-										wdpa,
-										e.latlng,
-										{
-												'info_format': 'text/javascript',  //it allows us to get a jsonp
-												'propertyName': ' wdpa_name,wdpaid,rep_area',
-												'query_layers': 'dopa_explorer_2:wdpa_foss4g',
-												'format_options':'callback:getJson'
-										}
-								);
-			 $.ajax({
-							 jsonp: false,
-							 url: url,
-							 dataType: 'jsonp',
-							 jsonpCallback: 'getJson',
-							 success: handleJson_featureRequest
-						 });
-					function handleJson_featureRequest(data)
-					{
-						 if (typeof data.features[0]!=='undefined')
-								 {
-										var prop=data.features[0].properties;
-										var filter="wdpaid='"+prop['wdpaid']+"'";
-										wdpa_hi.setParams({CQL_FILTER:filter});
-										hi_highcharts_wdpa(prop,latlng);
-							}
-							else {}
-						}
-				 }
-				 else {
-			 }
-});
+			map,
+			wdpa,
+			e.latlng,
+			{
+					'info_format': 'text/javascript',  //it allows us to get a jsonp
+					'propertyName': ' wdpa_name,wdpaid,rep_area',
+					'query_layers': 'dopa_explorer_2:wdpa_foss4g',
+					'format_options':'callback:getJson'
+			}
+	);
+	$.ajax({
+		 jsonp: false,
+		 url: url,
+		 dataType: 'jsonp',
+		 jsonpCallback: 'getJson',
+		 success: handleJson_featureRequest
+		 });
+	function handleJson_featureRequest(data)
+	{
+		 if (typeof data.features[0]!=='undefined')
+			{
+			var prop=data.features[0].properties;
+			var filter="wdpaid='"+prop['wdpaid']+"'";
+			wdpa_hi.setParams({CQL_FILTER:filter});
+			hi_highcharts_wdpa(prop,latlng);
+			}
+			else {}
+		}
+	}
+	else {
+	}
+	});
 
 
 
@@ -112,15 +100,15 @@ map.on('click', function(e) {
 	}
 
 // wdpa HIGLIGHTED
-	var url = 'https://lrm-maps.jrc.ec.europa.eu/geoserver/dopa_explorer_2/wms';
-	var wdpa_hi=L.tileLayer.wms(url, {
-		  layers: 'dopa_explorer_2:wdpa_foss4g',
-			transparent: true,
-			format: 'image/png',
-			opacity:'1',
-			styles: 'polygon',
-			zIndex: 44
-	 }).addTo(map);
+var url = 'https://lrm-maps.jrc.ec.europa.eu/geoserver/dopa_explorer_2/wms';
+var wdpa_hi=L.tileLayer.wms(url, {
+	  layers: 'dopa_explorer_2:wdpa_foss4g',
+		transparent: true,
+		format: 'image/png',
+		opacity:'1',
+		styles: 'polygon',
+		zIndex: 44
+ }).addTo(map);
 wdpa_hi.setParams({CQL_FILTER:"wdpaid LIKE ''"});
 
 	 function hi_highcharts_wdpa(info,latlng){
@@ -138,116 +126,116 @@ wdpa_hi.setParams({CQL_FILTER:"wdpaid LIKE ''"});
 				$( "#wdpa_plot_1995" ).show();
 				$( "#wdpa_plot_2015" ).show();
 
-		 $('#wdpa_plot_1995').highcharts({
-			 chart: {type:'column', height: 300,
-			 backgroundColor:'rgba(255, 255, 255, 0)',
-			 legend: {
-					 enabled: false
-			 }
-		 },
-			 colors: ['#0e4664', '#ee6305', '#11640e', '#eecd05'],
-			 title: {text: null},
-			 subtitle: {
-					 text: 'Land Cover 1995'
-			 },
-			 credits: {
-					 enabled: false,
-					 text: '© DOPA Services',
-					 href: 'http://dopa.jrc.ec.europa.eu/en/services'
-			 },
-				xAxis: {
-							 type: 'category',
-							 title: {
-									 text: null
-							 }
-					 },
-			yAxis: {
+		$('#wdpa_plot_1995').highcharts({
+		chart: {type:'column', height: 300,
+		backgroundColor:'rgba(255, 255, 255, 0)',
+		legend: {
+		enabled: false
+		}
+		},
+		colors: ['#0e4664', '#ee6305', '#11640e', '#eecd05'],
+		title: {text: null},
+		subtitle: {
+		text: 'Land Cover 1995'
+		},
+		credits: {
+		enabled: false,
+		text: '© DOPA Services',
+		href: 'http://dopa.jrc.ec.europa.eu/en/services'
+		},
+		xAxis: {
+		type: 'category',
+		title: {
+			 text: null
+		}
+		},
+		yAxis: {
 
-						 title: {
-								 text: '',
-								 align: 'high'
-						 },
-						 labels: {
-								 overflow: 'justify'
-						 }
+		title: {
+		 text: '',
+		 align: 'high'
+		},
+		labels: {
+		 overflow: 'justify'
+		}
 
-				 },
+		},
 
-		  series:[{
-								name: 'Cultivated / managed land',
-								color: '#eecd05',
-								data: [rep_area ]
-							},
-							{
-								name: 'Mosaic natural / managed land',
-								color: '#ee6305',
-								data: [rep_area ]
-							},
-							{
-								name: 'Natural / semi-natural land',
-								color: '#11640e',
-								data: [rep_area ]
-							},{
-								name: 'Water / snow and ice',
-								color: '#0e4664',
-								data: [rep_area ]
-							}
-						]
-		 });
+		series:[{
+		name: 'Cultivated / managed land',
+		color: '#eecd05',
+		data: [rep_area ]
+		},
+		{
+		name: 'Mosaic natural / managed land',
+		color: '#ee6305',
+		data: [rep_area ]
+		},
+		{
+		name: 'Natural / semi-natural land',
+		color: '#11640e',
+		data: [rep_area ]
+		},{
+		name: 'Water / snow and ice',
+		color: '#0e4664',
+		data: [rep_area ]
+		}
+		]
+		});
 
-		 		 $('#wdpa_plot_2015').highcharts({
-		 			 chart: {type:'column', height: 300,
-		 			 backgroundColor:'rgba(255, 255, 255, 0)',
-		 			 legend: {
-		 					 enabled: false
-		 			 }
-		 		 },
-		 			 colors: ['#0e4664'],
-		 			 title: {text: null},
-		 			 subtitle: {
-		 					 text: 'Land Cover 2015'
-		 			 },
-		 			 credits: {
-		 					 enabled: false,
-		 					 text: '© DOPA Services',
-		 					 href: 'http://dopa.jrc.ec.europa.eu/en/services'
-		 			 },
-		 				xAxis: {
-		 							 type: 'category',
-		 							 title: {
-		 									 text: null
-		 							 }
-		 					 },
-		 			yAxis: {
+		$('#wdpa_plot_2015').highcharts({
+		chart: {type:'column', height: 300,
+		backgroundColor:'rgba(255, 255, 255, 0)',
+		legend: {
+		enabled: false
+		}
+		},
+		colors: ['#0e4664'],
+		title: {text: null},
+		subtitle: {
+		text: 'Land Cover 2015'
+		},
+		credits: {
+		enabled: false,
+		text: '© DOPA Services',
+		href: 'http://dopa.jrc.ec.europa.eu/en/services'
+		},
+		xAxis: {
+		type: 'category',
+		title: {
+		text: null
+		}
+		},
+		yAxis: {
 
-		 						 title: {
-		 								 text: '',
-		 								 align: 'high'
-		 						 },
-		 						 labels: {
-		 								 overflow: 'justify'
-		 						 }
+		title: {
+		text: '',
+		align: 'high'
+		},
+		labels: {
+		overflow: 'justify'
+		}
 
-		 				 },
+		},
 
-		 			 series: [{
-		 								 name: 'Land Cover Classes',
-		 								 data: [
-		 									     ['Cultivated / managed land', parseFloat(Math.round(rep_area*100)/100)],
-		 											 ['Mosaic natural / managed land', parseFloat(Math.round(rep_area*100)/100)],
-		 											 ['Natural / semi-natural land', parseFloat(Math.round(rep_area*100)/100)],
-		 											 ['Water / snow and ice', parseFloat(Math.round(rep_area*100)/100)]
-		 										   ],
-		 											 negativeColor: '#efaa17'
+		series: [{
+		name: 'Land Cover Classes',
+		data: [
+		['Cultivated / managed land', parseFloat(Math.round(rep_area*100)/100)],
+		['Mosaic natural / managed land', parseFloat(Math.round(rep_area*100)/100)],
+		['Natural / semi-natural land', parseFloat(Math.round(rep_area*100)/100)],
+		['Water / snow and ice', parseFloat(Math.round(rep_area*100)/100)]
+		],
+		negativeColor: '#efaa17'
 
-		 							 }]
-
-
+		}]
 
 
-		 		 });
 
-	 } //end of function hi_highcharts_pa
+
+		});
+
+		} //end of function hi_highcharts_pa
 
 map.on('popupclose', function (){ //map is the name of map you gave to your leaflet map
 	$( "#wdpa_plot_1995" ).hide();

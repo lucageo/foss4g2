@@ -135,6 +135,117 @@ wdpa_hi.setParams({CQL_FILTER:"wdpaid LIKE ''"});
 					 .setLatLng([latlng.lat, latlng.lng])
 					 .setContent(popupContent)
 					 .openOn(map);
+				$( "#wdpa_plot_1995" ).show();
+				$( "#wdpa_plot_2015" ).show();
+
+		 $('#wdpa_plot_1995').highcharts({
+			 chart: {type:'column', height: 300,
+			 backgroundColor:'rgba(255, 255, 255, 0)',
+			 legend: {
+					 enabled: false
+			 }
+		 },
+			 colors: ['#0e4664', '#ee6305', '#11640e', '#eecd05'],
+			 title: {text: null},
+			 subtitle: {
+					 text: 'Land Cover 1995'
+			 },
+			 credits: {
+					 enabled: false,
+					 text: '© DOPA Services',
+					 href: 'http://dopa.jrc.ec.europa.eu/en/services'
+			 },
+				xAxis: {
+							 type: 'category',
+							 title: {
+									 text: null
+							 }
+					 },
+			yAxis: {
+
+						 title: {
+								 text: '',
+								 align: 'high'
+						 },
+						 labels: {
+								 overflow: 'justify'
+						 }
+
+				 },
+
+		  series:[{
+								name: 'Cultivated / managed land',
+								color: '#eecd05',
+								data: [rep_area ]
+							},
+							{
+								name: 'Mosaic natural / managed land',
+								color: '#ee6305',
+								data: [rep_area ]
+							},
+							{
+								name: 'Natural / semi-natural land',
+								color: '#11640e',
+								data: [rep_area ]
+							},{
+								name: 'Water / snow and ice',
+								color: '#0e4664',
+								data: [rep_area ]
+							}
+						]
+		 });
+
+		 		 $('#wdpa_plot_2015').highcharts({
+		 			 chart: {type:'column', height: 300,
+		 			 backgroundColor:'rgba(255, 255, 255, 0)',
+		 			 legend: {
+		 					 enabled: false
+		 			 }
+		 		 },
+		 			 colors: ['#0e4664'],
+		 			 title: {text: null},
+		 			 subtitle: {
+		 					 text: 'Land Cover 2015'
+		 			 },
+		 			 credits: {
+		 					 enabled: false,
+		 					 text: '© DOPA Services',
+		 					 href: 'http://dopa.jrc.ec.europa.eu/en/services'
+		 			 },
+		 				xAxis: {
+		 							 type: 'category',
+		 							 title: {
+		 									 text: null
+		 							 }
+		 					 },
+		 			yAxis: {
+
+		 						 title: {
+		 								 text: '',
+		 								 align: 'high'
+		 						 },
+		 						 labels: {
+		 								 overflow: 'justify'
+		 						 }
+
+		 				 },
+
+		 			 series: [{
+		 								 name: 'Land Cover Classes',
+		 								 data: [
+		 									     ['Cultivated / managed land', parseFloat(Math.round(rep_area*100)/100)],
+		 											 ['Mosaic natural / managed land', parseFloat(Math.round(rep_area*100)/100)],
+		 											 ['Natural / semi-natural land', parseFloat(Math.round(rep_area*100)/100)],
+		 											 ['Water / snow and ice', parseFloat(Math.round(rep_area*100)/100)]
+		 										   ],
+		 											 negativeColor: '#efaa17'
+
+		 							 }]
+
+
+
+
+		 		 });
 
 	 } //end of function hi_highcharts_pa
 

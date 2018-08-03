@@ -12,6 +12,7 @@
     <script src="libraries/jquery.js"></script>
     <script src="libraries/highcharts.js"></script>
     <script src="libraries/highcharts_more.js"></script>
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 
 		<!-- include our own css -->
 		<link rel="stylesheet" href="css/leaflet-example.css" />
@@ -20,15 +21,23 @@
 
 	<body>
 		<div id= 'banner'>
-      <center><h1>Free and Open Source Geospatial Tools for Conservation Planning Workshop</h1></center>
+      <h1>Free and Open Source Geospatial Tools for Conservation Planning Workshop</h1>
       <hr>
-	    <center><p> Example of a web application using the data produced, integrating various technologies including Postgres, GeoServer, LeafletJs and custom Javascripts.</p></center>
+	    <p> Example of a web application using the data produced, integrating various technologies including Postgres, GeoServer, LeafletJs and custom Javascripts.</p><img src="css/images/biopama.png" class="w3-round" alt="BIOPAMA">
     </div>
+
 		<div id="map"></div>
-    <div class="row">
-    <centre><div id="wdpa_plot_1995" class="col-sm-4"></div>
-    <div id="wdpa_plot_2015" class="col-sm-4"></div></centre>
+    <div class="row1">
+    <center><div id="wdpa_plot_1995_title" class="col-sm-4"> Land Cover 1995</div></center>
+    <center><div id="sankey_basic_title" class="col-sm-4">Land Cover Change</div></center>
+    <center><div id="wdpa_plot_2015_title" class="col-sm-4">Land Cover 2015</div></center>
     </div>
+    <div class="row">
+    <center><div id="wdpa_plot_1995" class="col-sm-4"></div></center>
+    <center><div id="sankey_basic" class="col-sm-4"></div></center>
+    <center><div id="wdpa_plot_2015" class="col-sm-4"></div></center>
+    </div>
+
 		<!-- include our own javascript -->
 		<script src="wdpa_stats.js"></script>
 
